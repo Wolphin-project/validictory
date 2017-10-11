@@ -581,3 +581,25 @@ class TestDivisibleBy(TestCase):
     def test_divisibleBy_ZeroDivisionError_fail(self):
         data = 60
         self.assertRaises(ValueError, validictory.validate, data, self.schema0)
+
+
+class TestEmptyList(TestCase):
+
+    def test_empty_list(self):
+        schema = {
+            "type": "object",
+            "properties": {
+                "mylist": {
+                    "items": [
+                        {"type": "string"}
+                    ],
+                    "additionalItems": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+        try:
+            validictory.validate({"mylist": []}, schema)
+        except ValueError as e:
+            self.fail("Unexpected failure: %s" % e)
